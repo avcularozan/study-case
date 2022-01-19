@@ -8,6 +8,7 @@
         </div>
         <div class="product-detail-box">
           <ProductDetailInfo :price="price" :piece="piece" />
+          <ProductDetailForm />
         </div>
       </div>
     </div>
@@ -16,14 +17,17 @@
 
 <script>
 import productDataJson from "../product-data";
+
 import ImageSection from "@/components/ImageSection";
 import ProductDetailInfo from "@/components/ProductDetailInfo";
+import ProductDetailForm from "@/components/ProductDetailForm";
 
 export default {
   name: "App",
   components: {
     ImageSection: ImageSection,
     ProductDetailInfo: ProductDetailInfo,
+    ProductDetailForm: ProductDetailForm,
   },
   data() {
     return {
