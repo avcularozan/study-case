@@ -8,7 +8,10 @@
         </div>
         <div class="product-detail-box">
           <ProductDetailInfo :price="price" :piece="piece" />
-          <ProductDetailForm :productData="productData" />
+          <ProductDetailForm
+            :productData="productData"
+            :selectedVariant="selectedVariant"
+          />
         </div>
       </div>
     </div>
@@ -40,7 +43,7 @@ export default {
   },
   provide() {
     return {
-      productData: this.productData,
+      updateAttribute: this.updateAttribute,
     };
   },
   created() {
@@ -60,6 +63,17 @@ export default {
       const firstPrice = baremList[0].price;
       const lastPrice = baremList[baremList.length - 1].price;
       return `${lastPrice} TL - ${firstPrice} TL`;
+    },
+    updateAttribute(att1, att2) {
+      this.productData.productVariants.map((variant) => {
+        if (
+          variant.attributes[1].value == att1 &&
+          variant.attributes[0].value == att2
+        ) {
+          this.images = variant.images;
+          this.selectedVariant = variant;
+        }
+      });
     },
   },
 };

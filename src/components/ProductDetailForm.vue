@@ -1,5 +1,9 @@
 <template>
   <form class="product-detail-form" @submit.prevent="addToBasket">
+    <SelectableAttributeList
+      :selectableAttributes="productData.selectableAttributes"
+      :productVariants="productData.productVariants"
+    />
     <QuantitySection
       :model="model"
       @data="calculation($event)"
@@ -19,14 +23,16 @@
 <script>
 import ProductPriceGroup from "@/components/ProductPriceGroup";
 import QuantitySection from "@/components/QuantitySection";
+import SelectableAttributeList from "@/components/SelectableAttributeList";
 
 export default {
   name: "ProductDetailFrom",
   components: {
     ProductPriceGroup: ProductPriceGroup,
     QuantitySection: QuantitySection,
+    SelectableAttributeList: SelectableAttributeList,
   },
-  inject: ["productData"],
+  props: ["productData", "selectedVariant"],
   data() {
     return {
       model: {
@@ -45,7 +51,12 @@ export default {
   },
   methods: {
     addToBasket() {
-      console.log("model", this.model);
+      const sendModel = {
+        selectedVariant: this.selectedVariant,
+        quantity: this.model.quantity,
+        totalPrice: this.model.totalPrice,
+      };
+      console.log("sendModel", sendModel);
     },
     calculation(value) {
       this.model.quantity = value;
