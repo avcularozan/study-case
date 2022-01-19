@@ -1,5 +1,6 @@
 <template>
   <form class="product-detail-form" @submit.prevent="addToBasket">
+    <QuantitySection :model="model" />
     <ProductPriceGroup :totalPrice="model.totalPrice" />
     <div class="button-holder">
       <button type="submit" class="button is-secondary" :disabled="isDisabled">
@@ -12,18 +13,27 @@
 
 <script>
 import ProductPriceGroup from "@/components/ProductPriceGroup";
+import QuantitySection from "@/components/QuantitySection";
 
 export default {
   name: "ProductDetailFrom",
   components: {
     ProductPriceGroup: ProductPriceGroup,
+    QuantitySection: QuantitySection,
   },
+  inject: ["productData"],
   data() {
     return {
       model: {
         totalPrice: 0,
+        stockQuantity: 10000,
+        baremList: [],
       },
     };
+  },
+  created() {
+    const baremList = this.productData.baremList;
+    this.model.baremList = baremList;
   },
   methods: {
     addToBasket() {

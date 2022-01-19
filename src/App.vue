@@ -8,7 +8,7 @@
         </div>
         <div class="product-detail-box">
           <ProductDetailInfo :price="price" :piece="piece" />
-          <ProductDetailForm />
+          <ProductDetailForm :productData="productData" />
         </div>
       </div>
     </div>
@@ -36,6 +36,11 @@ export default {
       title: null,
       price: null,
       piece: null,
+    };
+  },
+  provide() {
+    return {
+      productData: this.productData,
     };
   },
   created() {
