@@ -1,5 +1,6 @@
 <template>
   <form class="product-detail-form" @submit.prevent="addToBasket">
+    <ProductPriceGroup :totalPrice="model.totalPrice" />
     <div class="button-holder">
       <button type="submit" class="button is-secondary" :disabled="isDisabled">
         SEPETE EKLE
@@ -10,12 +11,18 @@
 </template>
 
 <script>
+import ProductPriceGroup from "@/components/ProductPriceGroup";
+
 export default {
   name: "ProductDetailFrom",
-  components: {},
+  components: {
+    ProductPriceGroup: ProductPriceGroup,
+  },
   data() {
     return {
-      model: {},
+      model: {
+        totalPrice: 0,
+      },
     };
   },
   methods: {
