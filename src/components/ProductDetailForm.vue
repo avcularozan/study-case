@@ -1,6 +1,11 @@
 <template>
   <form class="product-detail-form" @submit.prevent="addToBasket">
-    <QuantitySection :model="model" />
+    <QuantitySection
+      :model="model"
+      @data="calculation($event)"
+      :errorCheck="errorCheck"
+      :errorMessage="errorMessage"
+    />
     <ProductPriceGroup :totalPrice="model.totalPrice" />
     <div class="button-holder">
       <button type="submit" class="button is-secondary" :disabled="isDisabled">
@@ -34,15 +39,53 @@ export default {
   created() {
     const baremList = this.productData.baremList;
     this.model.baremList = baremList;
+    this.model.minPrice = baremList[0].price;
+    this.model.minQuantity = baremList[0].minimumQuantity;
+    this.model.maxQuantity = baremList[baremList.length - 1].maximumQuantity;
   },
   methods: {
     addToBasket() {
       console.log("model", this.model);
     },
+    calculation(value) {
+      this.model.quantity = value;
+      let price = null;
+      this.model.baremList.map((barem) => {
+        if (value >= barem.minimumQuantity) {
+          if (value <= barem.maximumQuantity) {
+            price = barem.price;
+          }
+        }
+      });
+      if (value) {
+        if (price) {
+          this.model.totalPrice = (price * value).toFixed(2);
+        } else {
+          this.model.totalPrice = (this.model.minPrice * value).toFixed(2);
+        }
+      } else {
+        this.model.totalPrice = this.model.minPrice;
+      }
+    },
   },
   computed: {
     isDisabled() {
       return false;
+    },
+    errorCheck() {
+      if (this.model.quantity < this.model.minQuantity) {
+        return true;
+      }
+      return false;
+    },
+    errorMessage() {
+      if (this.model.quantity === "") {
+        return "Bu alanın doldurulması zorunludur.";
+      }
+      if (this.model.quantity < this.model.minQuantity) {
+        return `Bu alan ${this.model.minQuantity}'den az ${this.model.maxQuantity}'den fazla olmamalıdır.`;
+      }
+      return "";
     },
   },
 };

@@ -28,6 +28,9 @@
             min="1"
           />
         </div>
+        <span v-show="errorCheck" class="quantity-error">
+          {{ errorMessage }}
+        </span>
         <span class="stock-quantity">
           Stok Adedi: <span>{{ model.stockQuantity }}</span>
         </span>
@@ -44,7 +47,7 @@ export default {
   components: {
     BaremItem: BaremItem,
   },
-  props: ["model"],
+  props: ["model", "errorCheck", "errorMessage"],
   data() {
     return {
       quantity: 1,
