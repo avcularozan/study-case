@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     isDisabled() {
-      return false;
+      return this.errorCheck || !this.selectedVariant;
     },
     errorCheck() {
       if (this.model.quantity < this.model.minQuantity) {
@@ -92,11 +92,11 @@ export default {
     errorMessage() {
       if (this.model.quantity === "") {
         return "Bu alanın doldurulması zorunludur.";
-      }
-      if (this.model.quantity < this.model.minQuantity) {
+      } else if (this.model.quantity < this.model.minQuantity) {
         return `Bu alan ${this.model.minQuantity}'den az ${this.model.maxQuantity}'den fazla olmamalıdır.`;
+      } else {
+        return "";
       }
-      return "";
     },
   },
 };
