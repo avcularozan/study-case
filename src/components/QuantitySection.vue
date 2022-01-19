@@ -1,5 +1,19 @@
 <template>
   <div>
+    <fieldset class="barem-box">
+      <label class="total-price">
+        Toptan Fiyat
+        <p>(Adet)</p>
+      </label>
+      <div class="barem-list">
+        <BaremItem
+          v-for="baremItem in model.baremList"
+          :baremItem="baremItem"
+          :key="baremItem"
+          :quantity="quantity"
+        />
+      </div>
+    </fieldset>
     <fieldset class="quantity-box">
       <label class="quantity-label" for="product-detail-quantity-input">
         Adet
@@ -23,9 +37,13 @@
 </template>
 
 <script>
+import BaremItem from "@/components/BaremItem";
+
 export default {
   name: "QuantitySection",
-  components: {},
+  components: {
+    BaremItem: BaremItem,
+  },
   props: ["model"],
   data() {
     return {
