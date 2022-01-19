@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container">
+    <div class="sections-holder">
+      <ImageSection :images="images" />
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import productDataJson from "../product-data";
+import ImageSection from "@/components/ImageSection";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    ImageSection: ImageSection,
+  },
+  data() {
+    return {
+      productData: productDataJson,
+      images: [],
+    };
+  },
+  created() {
+    let allImage = [];
+    this.productData.productVariants.map((variant) =>
+      variant.images.map((image) => allImage.push(image))
+    );
+    this.images = allImage;
+    console.log(productDataJson);
   },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
