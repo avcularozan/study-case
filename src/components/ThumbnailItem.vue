@@ -11,7 +11,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .thumbnail-item {
   display: inline-block;
   margin-left: 7px;

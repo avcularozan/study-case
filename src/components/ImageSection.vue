@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .image-holder {
   position: relative;
   float: left;
